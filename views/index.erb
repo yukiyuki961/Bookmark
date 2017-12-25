@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" herf="/assets/css/bookmark.css"
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+    
+    <div class= "contaier-fluid">
+        <div class="row">
+            <% @bookmarks.each do |bookmark| %>
+            <div class="col-md-3">
+                <img src="http://mozshot.nemui.org/shot/large?<%= bookmark.url %>" alt="">
+                <p><a href="<%= bookmark.url %>"><%= bookmark.title %>
+                </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <% end %>
+  
+  <form action="/create" method="post" id="frm" class="pull-left">
+    <label for="url">URL</label>
+     <input type="url" name="url" id="url">
+    <label for="title">タイトル</label>
+     <input type="title" name="title" id="title">
+     <input type="submit" value="追加" name="commit" class="btn-primary">
+  </form>
+  
+  <script>
+      $('url').change(function(){
+          $.get("/api/site", {url: $(this).val() },
+          function(data){
+              $('title').val(data.title);
+          });
+      })
+  </script>
+
+</body>
+</html>
